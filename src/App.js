@@ -18,11 +18,13 @@ const App = () => {
     setCurrentNumber(prev => `${prev === '0' ? '' : prev}${num}`);
     if (viewCalc === '') {
       setViewCalc('')
-      setViewCalc(`${num}`)  
+      setViewCalc(`${num}`)
+      setViewResult('0')
     } else {
       setViewCalc(`${viewCalc}${num}`)
+      setViewResult('0')
     }
-    
+
   }
 
   const handleOnClear = () => {
@@ -34,7 +36,7 @@ const App = () => {
   }
 
   const handleSumNumber = () => {
-    if(firstNumber === '0') {
+    if (firstNumber === '0') {
       setFirstNumber(String(currentNumber));
       setCurrentNumber('0');
       setOperation("+");
@@ -49,6 +51,99 @@ const App = () => {
     }
   }
 
+  const handleMinNumber = () => {
+    if (firstNumber === '0') {
+      setFirstNumber(String(currentNumber));
+      setCurrentNumber('0');
+      setOperation("-");
+      setViewCalc(`${currentNumber} - `)
+    } else {
+      const sum = (Number(firstNumber) - Number(currentNumber));
+      setCurrentNumber(String(sum));
+      setFirstNumber('0')
+      setViewCalc('');
+      setViewResult(sum)
+      setOperation('');
+    }
+  }
+
+  const handleMultNumber = () => {
+    if (firstNumber === '0') {
+      setFirstNumber(String(currentNumber));
+      setCurrentNumber('0');
+      setOperation("X");
+      setViewCalc(`${currentNumber} X `)
+    } else {
+      const sum = (Number(firstNumber) * Number(currentNumber));
+      setCurrentNumber(String(sum));
+      setFirstNumber('0')
+      setViewCalc('');
+      setViewResult(sum)
+      setOperation('');
+    }
+  }
+
+  const handleDivNumber = () => {
+    if (firstNumber === '0') {
+      setFirstNumber(String(currentNumber));
+      setCurrentNumber('0');
+      setOperation("/");
+      setViewCalc(`${currentNumber} / `)
+    } else {
+      const sum = (Number(firstNumber) / Number(currentNumber));
+      setCurrentNumber(String(sum));
+      setFirstNumber('0')
+      setViewCalc('');
+      setViewResult(sum)
+      setOperation('');
+    }
+  }
+
+  const handlePorcNumber = () => {
+    if (firstNumber === '0') {
+      setFirstNumber(String(currentNumber));
+      setCurrentNumber('0');
+      setOperation("%");
+      setViewCalc(`${currentNumber} % `)
+    } else {
+      const sum = ((Number(firstNumber) / 100) * Number(currentNumber));
+      setCurrentNumber(String(sum));
+      setFirstNumber('0')
+      setViewCalc('');
+      setViewResult(sum)
+      setOperation('');
+    }
+  }
+
+  const handleEquals = () => {
+    if (firstNumber !== '0' && operation !== '' && currentNumber !== '0') {
+      switch (operation) {
+        case '+':
+          handleSumNumber();
+          setCurrentNumber('0')
+          break;
+        case '-':
+          handleMinNumber();
+          setCurrentNumber('0')
+          break;
+        case 'X':
+          handleMultNumber();
+          setCurrentNumber('0')
+          break;
+        case '/':
+          handleDivNumber();
+          setCurrentNumber('0')
+          break;
+        case '%':
+          handlePorcNumber();
+          setCurrentNumber('0')
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   return (
     <>
       <StyleBody>
@@ -60,40 +155,36 @@ const App = () => {
           </StyleDisplayView>
         </StyleDisplay>
         <StyleButtons>
-            <Row>
-              <Buttons buttonColor="#FF5959" label="C" onClick={handleOnClear}></Buttons>
-              <Buttons buttonColor="" label="()"></Buttons>
-              <Buttons buttonColor="" label="%"></Buttons>
-              <Buttons buttonColor="" label="/"></Buttons>
-            </Row>
-            <Row>
-              <Buttons buttonColor="" label="7" onClick={
-                () => {
-                  handleAddNumber("7");
-                }
-              }></Buttons>
-              <Buttons buttonColor="" label="8" onClick={() => handleAddNumber("8")}></Buttons>
-              <Buttons buttonColor="" label="9" onClick={() => handleAddNumber("9")}></Buttons>
-              <Buttons buttonColor="" label="X"></Buttons>
-            </Row>
-            <Row>
-              <Buttons buttonColor="" label="4" onClick={() => handleAddNumber("4")}></Buttons>
-              <Buttons buttonColor="" label="5" onClick={() => handleAddNumber("5")}></Buttons>
-              <Buttons buttonColor="" label="6" onClick={() => handleAddNumber("6")}></Buttons>
-              <Buttons buttonColor="" label="-"></Buttons>
-            </Row>
-            <Row>
-              <Buttons buttonColor="" label="1" onClick={() => handleAddNumber("1")}></Buttons>
-              <Buttons buttonColor="" label="2" onClick={() => handleAddNumber("2")}></Buttons>
-              <Buttons buttonColor="" label="3" onClick={() => handleAddNumber("3")}></Buttons>
-              <Buttons buttonColor="" label="+" onClick={handleSumNumber}></Buttons>
-            </Row>
-            <Row>
-              <Buttons buttonColor="" label="+/-"></Buttons>
-              <Buttons buttonColor="" label="0" onClick={() => handleAddNumber("0")}></Buttons>
-              <Buttons buttonColor="" label="."></Buttons>
-              <Buttons buttonColor="#66FF7F" label="="></Buttons>
-            </Row>
+          <Row>
+            <Buttons buttonColor="#FF5959" label="C" onClick={handleOnClear}></Buttons>
+            <Buttons buttonColor="" label="()" onClick={() => alert("A Implementar")}></Buttons>
+            <Buttons buttonColor="" label="%" onClick={handlePorcNumber}></Buttons>
+            <Buttons buttonColor="" label="/" onClick={handleDivNumber}></Buttons>
+          </Row>
+          <Row>
+            <Buttons buttonColor="" label="7" onClick={() => { handleAddNumber("7") }}></Buttons>
+            <Buttons buttonColor="" label="8" onClick={() => handleAddNumber("8")}></Buttons>
+            <Buttons buttonColor="" label="9" onClick={() => handleAddNumber("9")}></Buttons>
+            <Buttons buttonColor="" label="X" onClick={handleMultNumber}></Buttons>
+          </Row>
+          <Row>
+            <Buttons buttonColor="" label="4" onClick={() => handleAddNumber("4")}></Buttons>
+            <Buttons buttonColor="" label="5" onClick={() => handleAddNumber("5")}></Buttons>
+            <Buttons buttonColor="" label="6" onClick={() => handleAddNumber("6")}></Buttons>
+            <Buttons buttonColor="" label="-" onClick={handleMinNumber}></Buttons>
+          </Row>
+          <Row>
+            <Buttons buttonColor="" label="1" onClick={() => handleAddNumber("1")}></Buttons>
+            <Buttons buttonColor="" label="2" onClick={() => handleAddNumber("2")}></Buttons>
+            <Buttons buttonColor="" label="3" onClick={() => handleAddNumber("3")}></Buttons>
+            <Buttons buttonColor="" label="+" onClick={handleSumNumber}></Buttons>
+          </Row>
+          <Row>
+            <Buttons buttonColor="" label="+/-" onClick={() => alert("A Implementar")}></Buttons>
+            <Buttons buttonColor="" label="0" onClick={() => handleAddNumber("0")}></Buttons>
+            <Buttons buttonColor="" label="."></Buttons>
+            <Buttons buttonColor="#66FF7F" label="=" onClick={handleEquals}></Buttons>
+          </Row>
           <StyleFooter>
             <StyleLineFooter />
           </StyleFooter>
